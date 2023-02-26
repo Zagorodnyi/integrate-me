@@ -1,3 +1,3 @@
-import { IntegrationState } from "../../Integration";
+import { IntegrationState } from '../../Integration';
 
 export type StatusesMap = Record<string, IntegrationState>;
