@@ -1,4 +1,4 @@
-import { Integration, IntegrationCheckResult } from '../Integrations';
+import { Integration, IntegrationCheckResult } from '../Integration';
 import { StatusLogger } from 'utils';
 
 const logger = new StatusLogger();
@@ -8,7 +8,7 @@ interface IntegrationBuilderConfig {
   throwOnError?: boolean;
 }
 
-export class IntegrationBuilder {
+export class IntegrationCheckBuilder {
   constructor(config?: IntegrationBuilderConfig) {
     this.config = config;
   }
@@ -16,7 +16,12 @@ export class IntegrationBuilder {
   private config?: IntegrationBuilderConfig;
   private integrations: Array<Integration> = [];
 
-  next<T extends Integration>(integration: T) {
+  checkModuleIntegration = (
+    name: string,
+    integrationFn: () => Promise<void>
+  ) => {
+    const integration = new Integration(name, integrationFn);
+
     this.integrations.push(integration);
 
     logger.registerIntegration(integration.name);
@@ -25,12 +30,12 @@ export class IntegrationBuilder {
       logger.updateState(integration.name, state);
 
       if (this.config?.throwOnError && state.status === 'ERROR') {
-        throw new Error(state.error);
+        throw state.errObj || new Error(state.error);
       }
     });
 
     return this;
-  }
+  };
 
   async check(): Promise<IntegrationCheckResult[]> {
     logger.start();

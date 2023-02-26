@@ -3,7 +3,7 @@ import { dots10 } from 'cli-spinners';
 
 import Multiline from './Multiline';
 import { StatusesMap } from './types';
-import { IntegrationState, IntegrationStatus } from '../../Integrations';
+import { IntegrationState, IntegrationStatus } from '../../Integration';
 
 const stdout = new Multiline(process.stdout);
 
@@ -57,10 +57,8 @@ export class StatusLogger {
       this.integrationsCount--;
     }
 
-    if (this.integrationsCount === 0) {
-      setImmediate(() => {
-        process.exit(0);
-      });
+    if (this.integrationsCount <= 0) {
+      return;
     }
   }
 

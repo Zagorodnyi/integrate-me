@@ -2,7 +2,7 @@ export type {
   IntegrationError,
   IntegrationSuccess,
   IntegrationCheckResult,
-} from './Integrations';
+} from './Integration';
 
-export { createModuleIntegration } from './Integrations';
-export { IntegrationBuilder } from './IntegrationBuilder';
+export { IntegrationStatus } from './Integration';
+export { IntegrationCheckBuilder } from './IntegrationCheckBuilder';

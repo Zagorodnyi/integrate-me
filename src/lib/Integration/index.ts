@@ -7,5 +7,3 @@ export {
   IntegrationSuccess,
   IntegrationCheckResult,
 } from './Integration';
-
-export { createModuleIntegration } from './ModuleIntegration';
