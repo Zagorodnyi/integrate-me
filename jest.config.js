@@ -4,6 +4,11 @@ const { compilerOptions } = require('./tsconfig.json');
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  coverageProvider: 'v8',
+  collectCoverage: true,
+  coverageDirectory: './coverage',
+  collectCoverageFrom: ['src/lib/**/*.{ts,tsx}'],
+  coverageReporters: ['json', 'lcov', 'text', 'clover'],
   roots: ['<rootDir>'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
   modulePaths: ['<rootDir>'],
