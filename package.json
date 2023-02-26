@@ -1,12 +1,22 @@
 {
   "name": "integrate-me",
   "version": "1.0.0",
-  "description": "Small package to check you external API integrations",
+  "description": "Small package with zero dependencies to check your external module integrations",
+  "keywords": [
+    "api",
+    "module",
+    "external",
+    "integrate",
+    "integration",
+    "integration-test",
+    "integration-check"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start:dev": "nodemon --watch ./src --exec ts-node --project ./tsconfig.json ./src/index.ts",
-    "build": "tsup ",
+    "build": "tsup",
     "code:format": "prettier -w ./src",
     "test": "jest"
   },
