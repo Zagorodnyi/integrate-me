@@ -1,0 +1,6 @@
+src/
+node_modules/
+coverage/
+.github/
+tsconfig.json
+tsup.config.ts
