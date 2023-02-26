@@ -3,6 +3,7 @@
     "target": "es2016",
     "experimentalDecorators": true,
     "lib": ["es2020"],
+    "baseUrl": "./",
 
     "module": "commonjs",
     "esModuleInterop": true,
@@ -16,7 +17,7 @@
 
     "skipLibCheck": true,
     "paths": {
-      "utils": ["./src/lib/utils"]
+      "utils": ["src/lib/utils"]
     }
   }
 }
