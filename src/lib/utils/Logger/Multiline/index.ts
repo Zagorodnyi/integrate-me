@@ -28,12 +28,12 @@ export class Multiline {
       this.indexes[key] = this.total++;
     } else {
       toMove = index - this.total;
-      output?.moveCursor(0, toMove);
-      output?.clearLine(0);
+      output.moveCursor?.(0, toMove);
+      output.clearLine?.(0);
     }
 
     output.write(line);
-    output?.moveCursor(-line.length, -toMove);
+    output.moveCursor?.(-line.length, -toMove);
   }
 }
 
