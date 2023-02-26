@@ -21,6 +21,7 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - run: cat  ${{ secrets.GITHUB_TOKEN }}
 
       - name: Coveralls GitHub Action
         if: ${{ github.event_name != 'pull_request' }}
@@ -28,5 +29,5 @@ jobs:
         env:
           NODE_COVERALLS_DEBUG: 1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           git-branch: 'main'
