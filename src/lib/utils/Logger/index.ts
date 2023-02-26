@@ -2,11 +2,10 @@ import cliColor from 'colors-cli';
 import { dots10 } from 'cli-spinners';
 
 import Multiline from './Multiline';
+import { StatusesMap } from './types';
 import { IntegrationState, IntegrationStatus } from '../../Integrations';
 
 const stdout = new Multiline(process.stdout);
-
-type StatusesMap = Record<string, IntegrationState>;
 
 export class StatusLogger {
   constructor() {}

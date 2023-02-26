@@ -2,7 +2,7 @@ import { Integration } from './Integration';
 
 export const createModuleIntegration = (
   name: string,
-  callback: () => Promise<void>
+  integrationFn: () => Promise<void>
 ) => {
-  return new Integration(name, callback);
+  return new Integration(name, integrationFn);
 };
