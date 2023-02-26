@@ -25,6 +25,8 @@ jobs:
       - name: Coveralls GitHub Action
         if: ${{ github.event_name != 'pull_request' }}
         uses: coverallsapp/github-action@master
+        env:
+          NODE_COVERALLS_DEBUG: 1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}'
           git-branch: 'main'
