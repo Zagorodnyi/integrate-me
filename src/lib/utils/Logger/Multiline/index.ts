@@ -1,11 +1,15 @@
+import type { ConsoleStream } from '../types';
+
 export class Multiline {
-  constructor(stream: NodeJS.Process['stdout'] | NodeJS.Process['stderr']) {
+  private constructor(stream: ConsoleStream) {
     this.indexes = {};
     this.total = 1;
     this.stream = stream;
+  }
 
+  public static getInstance(stream: ConsoleStream): Multiline {
     if (!Multiline.instance) {
-      Multiline.instance = this;
+      Multiline.instance = new Multiline(stream);
     }
 
     return Multiline.instance;
@@ -14,7 +18,7 @@ export class Multiline {
   static instance: Multiline;
   indexes: Record<string, number>;
   total: number;
-  stream: NodeJS.Process['stdout'] | NodeJS.Process['stderr'];
+  stream: ConsoleStream;
 
   update(key: string, msg: string) {
     const index = this.indexes[key];

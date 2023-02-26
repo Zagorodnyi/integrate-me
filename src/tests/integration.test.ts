@@ -1,11 +1,15 @@
 import {
-  IntegrationCheckBuilder,
-  IntegrationSuccess,
-  IntegrationStatus,
   IntegrationError,
+  IntegrationStatus,
+  IntegrationSuccess,
+  IntegrationCheckBuilder,
 } from '../lib';
 
 jest.useFakeTimers();
+
+jest.mock('../lib/utils/delay', () => ({
+  delay: jest.fn(() => Promise.resolve()),
+}));
 
 describe('Test IntegrationCheckBuilder', () => {
   it('Builder should exist', () => {
@@ -15,8 +19,8 @@ describe('Test IntegrationCheckBuilder', () => {
 
   it('Check success result of module integration', async () => {
     const integrationFn = jest.fn(() => Promise.resolve());
-    const res = await new IntegrationCheckBuilder()
-      .checkModuleIntegration('successfulIntegration', integrationFn)
+    const res = await new IntegrationCheckBuilder({ throwOnError: false })
+      .addModuleIntegration('successfulIntegration', integrationFn)
       .check();
 
     expect(integrationFn).toHaveBeenCalledTimes(1);
@@ -32,8 +36,8 @@ describe('Test IntegrationCheckBuilder', () => {
     const rejectionError = new Error('error');
     const integrationFn = jest.fn(() => Promise.reject(rejectionError));
 
-    const res = await new IntegrationCheckBuilder()
-      .checkModuleIntegration('errorIntegration', integrationFn)
+    const res = await new IntegrationCheckBuilder({ throwOnError: false })
+      .addModuleIntegration('errorIntegration', integrationFn)
       .check();
 
     expect(integrationFn).toHaveBeenCalledTimes(1);
@@ -47,13 +51,13 @@ describe('Test IntegrationCheckBuilder', () => {
     ]);
   });
 
-  it('Expect to throw an exeption if { throwOnError: true }', async () => {
+  it('Expect to throw an exeption if not { throwOnError: false }', async () => {
     const rejectionError = new Error('Error thrown by test');
     const integrationFn = jest.fn(() => Promise.reject(rejectionError));
 
     const checkFn = async () =>
-      new IntegrationCheckBuilder({ throwOnError: true })
-        .checkModuleIntegration('throwOnError', integrationFn)
+      new IntegrationCheckBuilder()
+        .addModuleIntegration('throwOnError', integrationFn)
         .check();
 
     await expect(checkFn).rejects.toThrowError(rejectionError);
@@ -64,8 +68,11 @@ describe('Test IntegrationCheckBuilder', () => {
     const rejectionError = new Error('error');
     const integrationFn = jest.fn(() => Promise.reject(rejectionError));
 
-    const res = await new IntegrationCheckBuilder({ retry: 5 })
-      .checkModuleIntegration('RetryWithError', integrationFn)
+    const res = await new IntegrationCheckBuilder({
+      retry: 5,
+      throwOnError: false,
+    })
+      .addModuleIntegration('RetryWithError', integrationFn)
       .check();
 
     expect(res).toEqual<Array<IntegrationError>>([

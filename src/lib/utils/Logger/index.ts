@@ -5,7 +5,7 @@ import Multiline from './Multiline';
 import { StatusesMap } from './types';
 import { IntegrationState, IntegrationStatus } from '../../Integration';
 
-const stdout = new Multiline(process.stdout);
+const stdout = Multiline.getInstance(process.stdout);
 
 export class StatusLogger {
   constructor() {}

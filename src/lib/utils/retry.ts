@@ -1,3 +1,5 @@
+import { delay } from './delay';
+
 export const retry = async (
   fn: any,
   attemts: number,
@@ -12,6 +14,8 @@ export const retry = async (
       onNextAttempt(i + 1);
       error = err;
     }
+
+    await delay(1500);
   }
 
   throw error;

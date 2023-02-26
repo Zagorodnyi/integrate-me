@@ -10,16 +10,16 @@ interface IntegrationBuilderConfig {
 
 export class IntegrationCheckBuilder {
   constructor(config?: IntegrationBuilderConfig) {
-    this.config = config;
+    this.config = {
+      throwOnError: true,
+      ...config,
+    };
   }
 
   private config?: IntegrationBuilderConfig;
   private integrations: Array<Integration> = [];
 
-  checkModuleIntegration = (
-    name: string,
-    integrationFn: () => Promise<void>
-  ) => {
+  addModuleIntegration = (name: string, integrationFn: () => Promise<void>) => {
     const integration = new Integration(name, integrationFn);
 
     this.integrations.push(integration);
