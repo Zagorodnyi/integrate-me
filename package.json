@@ -1,6 +1,6 @@
 {
   "name": "integrate-me",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Small package with zero dependencies to check your external module integrations",
   "keywords": [
     "api",
