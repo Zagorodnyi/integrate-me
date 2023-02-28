@@ -1,4 +1,6 @@
 # Integrate Me
+[![Coverage Status](https://coveralls.io/repos/github/Zagorodnyi/integrate-me/badge.svg?branch=main)](https://coveralls.io/github/Zagorodnyi/integrate-me?branch=main)
+
 Simple integration checker for your API services and external modules when it is crucial for your app.
 
 
