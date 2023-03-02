@@ -1,5 +1,8 @@
 # Integrate Me
+[![ci Status](https://github.com/Zagorodnyi/integrate-me/workflows/Test%20&%20Build/badge.svg)](https://github.com/Zagorodnyi/integrate-me/actions?query=workflow%3A%22Test+Build%22+branch%3Amain)
 [![Coverage Status](https://coveralls.io/repos/github/Zagorodnyi/integrate-me/badge.svg?branch=main)](https://coveralls.io/github/Zagorodnyi/integrate-me?branch=main)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Zagorodnyi/integrate-me/blob/main/LICENSE)
+[![npm downloads](https://img.shields.io/npm/dt/integrate-me.svg)](https://www.npmjs.com/package/integrate-me)
 
 Simple integration checker for your API services and external modules when it is crucial for your app.
 
