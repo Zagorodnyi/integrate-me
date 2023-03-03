@@ -3,7 +3,7 @@ import { delay } from './delay';
 export const retry = async (
   fn: any,
   attemts: number,
-  onNextAttempt: (attempt: number) => void
+  onNextAttempt: (attempt: number, err?: any) => void
 ) => {
   let error: any;
 
@@ -11,7 +11,7 @@ export const retry = async (
     try {
       return await fn();
     } catch (err: any) {
-      onNextAttempt(i + 1);
+      onNextAttempt(i + 1, err);
       error = err;
     }
 

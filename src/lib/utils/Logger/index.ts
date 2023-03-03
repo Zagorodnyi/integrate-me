@@ -26,28 +26,35 @@ export class StatusLogger {
 
   public updateState(key: keyof StatusesMap, value: IntegrationState) {
     this.statuses[key] = value;
-    const log = `${key}: ${value.status}`;
+    const baseLog = `${key}: ${value.status}`;
 
     switch (value.status) {
       case IntegrationStatus.LOADING:
         this.setLoading(key);
         break;
+
       case IntegrationStatus.OK:
         clearInterval(this.intervals[key]);
-        this.updateLog(key, cliColor.green(log));
+        this.updateLog(key, cliColor.green(baseLog));
         break;
+
       case IntegrationStatus.ERROR:
+        const errorLog = `${baseLog} - ${value.error}`;
         clearInterval(this.intervals[key]);
-        this.updateLog(key, cliColor.red(log));
+        this.updateLog(key, cliColor.red(errorLog));
         break;
+
       case IntegrationStatus.RETRY:
         clearInterval(this.intervals[key]);
-        const retryLog = `${log} (attempt ${value.attempt})`;
+        const retryLog =
+          `${baseLog} (attempt ${value.attempt}) ` +
+          `- ${cliColor.red(value.lastError)}`;
         this.updateLog(key, cliColor.yellow(retryLog));
         break;
+
       default:
         clearInterval(this.intervals[key]);
-        this.updateLog(key, cliColor.faint(log));
+        this.updateLog(key, cliColor.faint(baseLog));
     }
 
     if (
@@ -82,10 +89,11 @@ export class StatusLogger {
   }
 
   start() {
-    this.updateLog(
-      'IntegrateMeTitle',
-      cliColor.faint('==== INTEGRATE ME ====')
+    const initMessage = cliColor.black(
+      `\n   ${cliColor.white_bbt(' ==== INTEGRATE ME ==== ')}\n`
     );
+
+    this.updateLog('IntegrateMeTitle', initMessage);
 
     for (const key in this.statuses) {
       this.updateState(key, { status: IntegrationStatus.LOADING });

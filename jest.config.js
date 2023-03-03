@@ -9,7 +9,7 @@ module.exports = {
   coverageDirectory: './coverage',
   collectCoverageFrom: ['src/lib/**/*.{ts,tsx}'],
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
-  coveragePathIgnorePatterns: ['types', 'delay.ts'],
+  coveragePathIgnorePatterns: ['types', 'delay.ts', 'utils/Logger'],
   roots: ['<rootDir>'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
   modulePaths: ['<rootDir>'],

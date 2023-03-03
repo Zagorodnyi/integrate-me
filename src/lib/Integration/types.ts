@@ -19,6 +19,7 @@ export interface IntegrationSuccess {
 
 export interface IntegrationRetry {
   integrationName: string;
+  lastError: string;
   status: IntegrationStatus.RETRY;
   attempt: number;
 }

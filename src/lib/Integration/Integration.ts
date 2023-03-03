@@ -11,7 +11,7 @@ export class Integration {
   private callback: () => Promise<void>;
   private onStateChangeCb: (state: IntegrationState) => void = () => {};
   name: string;
-  private integrationState: IntegrationState = {
+  private state: IntegrationState = {
     status: IntegrationStatus.LOADING,
   };
 
@@ -20,13 +20,9 @@ export class Integration {
     this.callback = callback;
   }
 
-  set state(state: IntegrationState) {
-    this.integrationState = state;
+  private setState(state: IntegrationState) {
+    this.state = state;
     this.onStateChangeCb(state);
-  }
-
-  get state(): IntegrationState {
-    return this.integrationState;
   }
 
   onStateChange(callback: (state: IntegrationState) => void) {
@@ -34,27 +30,28 @@ export class Integration {
   }
 
   async check(retryCount: number = 1): Promise<IntegrationCheckResult> {
-    const onNextAttempt = (attempt: number) => {
-      this.state = {
+    const onNextAttempt = (attempt: number, error: any = {}) => {
+      this.setState({
         status: IntegrationStatus.RETRY,
         integrationName: this.name,
+        lastError: error?.message || JSON.stringify(error),
         attempt: attempt,
-      };
+      });
     };
 
     try {
       await retry(async () => this.callback(), retryCount, onNextAttempt);
 
-      this.state = { status: IntegrationStatus.OK, integrationName: this.name };
+      this.setState({ status: IntegrationStatus.OK, integrationName: this.name });
     } catch (err: any) {
-      this.state = {
+      this.setState({
         integrationName: this.name,
         status: IntegrationStatus.ERROR,
         error: err?.messate || 'Integration failed',
         errObj: err,
-      };
+      });
     }
 
-    return this.state;
+    return this.state as IntegrationCheckResult;
   }
 }
